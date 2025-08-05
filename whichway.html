@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clockwise/Counter-clockwise</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            cursor: pointer;
+            user-select: none;
+            overflow: hidden;
+        }
+        #text-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        #text {
+            font-size: 1px;
+            text-align: center;
+        }
+        .clockwise {
+            background-color: black;
+            color: white;
+        }
+        .counter-clockwise {
+            background-color: white;
+            color: black;
+        }
+    </style>
+</head>
+<body class="clockwise" onclick="toggleState()">
+    <div id="text-container">
+        <div id="text">Clockwise</div>
+    </div>
+
+    <script>
+        function toggleState() {
+            const body = document.body;
+            const text = document.getElementById('text');
+
+            if (body.classList.contains('clockwise')) {
+                body.classList.remove('clockwise');
+                body.classList.add('counter-clockwise');
+                text.innerHTML = 'Counter<br>Clockwise';
+            } else {
+                body.classList.remove('counter-clockwise');
+                body.classList.add('clockwise');
+                text.innerHTML = 'Clockwise';
+            }
+            resizeText();
+        }
+
+        function resizeText() {
+            const container = document.getElementById('text-container');
+            const text = document.getElementById('text');
+            let fontSize = 1;
+            text.style.fontSize = fontSize + 'px';
+
+            while (text.offsetWidth < container.offsetWidth * 0.9 &&  
+                   text.offsetHeight < container.offsetHeight * 0.9) {
+                fontSize++;
+                text.style.fontSize = fontSize + 'px';
+            }
+
+            fontSize--;
+            text.style.fontSize = fontSize + 'px';
+        }
+
+        window.onload = resizeText;
+        window.onresize = resizeText;
+    </script>
+</body>
+</html>
